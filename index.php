@@ -20,13 +20,12 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "success =)";
 
-    $jongens_namen = $pdo->prepare("SELECT * FROM 'voornamen_jongens_1995_2017_0' WHERE 1");
-    $submissions->bindParam(':startdate', $startdate_timestamp);
-    $submissions->bindParam(':enddate', $enddate_timestamp);
-    $submissions->execute(); 
-    $submission_array = $submissions->fetchAll();
+    $namen = $pdo->prepare("SELECT * FROM 'voornamen' WHERE 1");
+    $namen->bindParam(':voornaam', $voornaam);
+    $namen->execute(); 
+    $namen_array = $namen->fetchAll();
 
-
+    echo $namen_array;
 
 
 
