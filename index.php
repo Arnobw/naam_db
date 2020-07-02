@@ -20,12 +20,13 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "success =)";
 
-    $namen = $pdo->prepare("SELECT * FROM 'voornamen' WHERE 1");
-    $namen->bindParam(':voornaam', $voornaam);
-    $namen->execute(); 
-    $namen_array = $namen->fetchAll();
+    $sql = $pdo->prepare("SELECT * FROM voornamen ORDER BY naam_id ASC");
+    $sql->execute();
+    while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
+        echo $result['voornaam']."<br/>";
+    }
 
-    echo $namen_array;
+
 
 
 
