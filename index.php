@@ -18,14 +18,13 @@ try {
     $pdo = new PDO("mysql:host=" . servername . ";dbname=" . dbname, user, password);
     // set the PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "success =) <br>";
+ 
 
     // $sql = $pdo->prepare("SELECT * FROM voornamen ORDER BY naam_id ASC");
-    $sql = $pdo->prepare("SELECT TOP 100 totaal_voorkomen,voornaam, geslacht");
+    $sql = $pdo->prepare("SELECT * FROM voornamen WHERE geslacht = 'm' ORDER BY totaal_voorkomen DESC LIMIT 100");
     $sql->execute();
     while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
-        echo $result['voornaam']."<br/>";
-        echo strlen($result['voornaam']."<br/>") ;
+        echo $result['voornaam']."<br/>" . "Totaal voorkomen: " . $result['totaal_voorkomen'] . "<br>";
     }
 
 
