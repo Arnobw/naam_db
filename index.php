@@ -43,7 +43,12 @@ try {
     <?php
     while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
         echo $result['voornaam']."<br/>" . "Totaal voorkomen: " . $result['totaal_voorkomen'] . "<br>" . '<hr>' ;
+        $result_chars = array_push(strlen($result['voornaam'])); 
+      
     }
+
+    $result_avg = array_sum($result_chars) / count($result_chars);
+    echo '<div id="gemiddelde">De gemiddelde lengte van de meisjesnamen is:' . $result_avg . '</div>';
 
     ?>
     </div>
@@ -56,8 +61,12 @@ try {
     $sql->execute();
     while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
         echo $result['voornaam']."<br/>" . "Totaal voorkomen: " . $result['totaal_voorkomen'] . "<br>" . '<hr>';
+        $result_chars = array_push(strlen($result['voornaam'])); 
+    
     }
 
+    $result_avg = array_sum($result_chars) / count($result_chars);
+    echo '<div id="gemiddelde">De gemiddelde lengte van de meisjesnamen is:' . $result_avg . '</div>';
 
   ?>
 
