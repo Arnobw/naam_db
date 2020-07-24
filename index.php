@@ -1,4 +1,4 @@
-
+<!-- SELECT geslacht, SUM(totaal_voorkomen*LENGTH(voornaam))  / SUM(totaal_voorkomen) GemiddeldeM FROM `voornamen` GROUP BY geslacht -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,12 +43,14 @@ try {
     <?php
     while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
         echo $result['voornaam']."<br/>" . "Totaal voorkomen: " . $result['totaal_voorkomen'] . "<br>" . '<hr>' ;
-        $result_chars = array_push(strlen($result['voornaam'])); 
-      
-    }
+        $result_chars = array();
+        array_push($result_chars, strlen($result['voornaam'])); 
+ 
+    
+        }
+        $result_avg = array_sum($result_chars) / count($result_chars);
+        echo '<div id="gemiddelde">De gemiddelde lengte van de meisjesnamen is:' . $result_avg . '</div>';
 
-    $result_avg = array_sum($result_chars) / count($result_chars);
-    echo '<div id="gemiddelde">De gemiddelde lengte van de meisjesnamen is:' . $result_avg . '</div>';
 
     ?>
     </div>
@@ -61,7 +63,8 @@ try {
     $sql->execute();
     while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
         echo $result['voornaam']."<br/>" . "Totaal voorkomen: " . $result['totaal_voorkomen'] . "<br>" . '<hr>';
-        $result_chars = array_push(strlen($result['voornaam'])); 
+        $result_chars = array();
+        array_push($result_chars, strlen($result['voornaam'])); 
     
     }
 
