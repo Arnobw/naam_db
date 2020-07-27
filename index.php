@@ -36,21 +36,21 @@ try {
     $sql = $pdo->prepare("SELECT * FROM voornamen WHERE geslacht = 'm' ORDER BY totaal_voorkomen DESC LIMIT 100");
     $sql->execute();
 
+    
+    $sql_avg = $pdo->prepare("SELECT geslacht, SUM(totaal_voorkomen*LENGTH(voornaam))  / SUM(totaal_voorkomen) GemiddeldeM FROM `voornamen` GROUP BY geslacht");
+    $sql_avg->execute();
+    $result_avg = $sql_avg->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
     <div class="mannen_namen">
 
     <?php
+
+    echo "De gemiddelde lengte van alle jongensnamen is " . $result_avg[0]['GemiddeldeM'] . " letters.";
     while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
         echo $result['voornaam']."<br/>" . "Totaal voorkomen: " . $result['totaal_voorkomen'] . "<br>" . '<hr>' ;
-        $result_chars = array();
-        array_push($result_chars, strlen($result['voornaam'])); 
- 
+      }
     
-        }
-        $result_avg = array_sum($result_chars) / count($result_chars);
-        echo '<div id="gemiddelde">De gemiddelde lengte van de meisjesnamen is:' . $result_avg . '</div>';
-
 
     ?>
     </div>
@@ -61,15 +61,19 @@ try {
     <?php
     $sql = $pdo->prepare("SELECT * FROM voornamen WHERE geslacht = 'v' ORDER BY totaal_voorkomen DESC LIMIT 100");
     $sql->execute();
+    $sql_avg = $pdo->prepare("SELECT geslacht, SUM(totaal_voorkomen*LENGTH(voornaam))  / SUM(totaal_voorkomen) GemiddeldeM FROM `voornamen` GROUP BY geslacht");
+    $sql_avg->execute();
+    $result_avg = $sql_avg->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "De gemiddelde lengte van alle meisjesnamen is " . $result_avg[1]['GemiddeldeM'] . " letters.";  
     while ($result = $sql->fetch(PDO::FETCH_ASSOC)) {
         echo $result['voornaam']."<br/>" . "Totaal voorkomen: " . $result['totaal_voorkomen'] . "<br>" . '<hr>';
-        $result_chars = array();
-        array_push($result_chars, strlen($result['voornaam'])); 
-    
-    }
+      }
 
-    $result_avg = array_sum($result_chars) / count($result_chars);
-    echo '<div id="gemiddelde">De gemiddelde lengte van de meisjesnamen is:' . $result_avg . '</div>';
+
+
+
+
 
   ?>
 
